@@ -2,16 +2,7 @@ import * as path from 'node:path';
 import * as process from 'process';
 import * as fs from 'fs';
 import _ from 'lodash';
-
-function parseJson(json) {
-  return JSON.parse(json);
-}
-
-const formats = {
-  json(content) {
-    return parseJson(content);
-  },
-};
+import parsers from './parsers.js';
 
 function genDiff(filepath1, filepath2) {
   let result = '';
@@ -25,8 +16,8 @@ function genDiff(filepath1, filepath2) {
   const ext1 = filepath1.split('.').at(-1);
   const ext2 = filepath2.split('.').at(-1);
 
-  const parsedContent1 = formats[ext1](content1);
-  const parsedContent2 = formats[ext2](content2);
+  const parsedContent1 = parsers[ext1](content1);
+  const parsedContent2 = parsers[ext2](content2);
 
   const sortedContent1 = Object.fromEntries(_.sortBy(Object.entries(parsedContent1)));
   const sortedContent2 = Object.fromEntries(_.sortBy(Object.entries(parsedContent2)));
