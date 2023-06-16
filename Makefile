@@ -12,7 +12,7 @@ test:
 
 test-coverage:
 	# TODO: set global flag --experimental-test-coverage
-	npm test
+	npx jest --coverage
 
 lint:
 	npx eslint .
