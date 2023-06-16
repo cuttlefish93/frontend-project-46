@@ -31,7 +31,10 @@ function genDiff(filepath1, filepath2) {
   const sortedContent1 = Object.fromEntries(_.sortBy(Object.entries(parsedContent1)));
   const sortedContent2 = Object.fromEntries(_.sortBy(Object.entries(parsedContent2)));
 
-  for (const key of Object.keys(sortedContent1)) {
+  const keys1 = Object.keys(sortedContent1);
+  const keys2 = Object.keys(sortedContent2);
+
+  keys1.forEach((key) => {
     const value1 = sortedContent1[key];
     const value2 = sortedContent2[key];
 
@@ -46,19 +49,19 @@ function genDiff(filepath1, filepath2) {
     if (value1 !== value2 && value2) {
       result = `${result}\n- ${key}: ${value1}\n+ ${key}: ${value2}`;
     }
-  }
+  });
 
-  for (const key of Object.keys(sortedContent2)) {
+  keys2.forEach((key) => {
     const value1 = sortedContent1[key];
     const value2 = sortedContent2[key];
 
     if (!value1) {
       result = `${result}\n+ ${key}: ${value2}`;
     }
-  }
+  });
 
   return `{${result}
 }`;
 }
 
-export { genDiff };
+export default genDiff;

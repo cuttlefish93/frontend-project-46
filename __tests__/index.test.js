@@ -1,6 +1,6 @@
 import * as path from 'node:path';
 import * as process from 'process';
-import { genDiff } from '../index.js';
+import genDiff from '../src/index.js';
 
 test('genDiff', () => {
   const path1 = path.join(process.cwd(), '/files/file1.json');
