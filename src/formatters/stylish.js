@@ -14,7 +14,7 @@ function stylish(coll) {
   const jsonArr = formattedJson.split('\n').map((item) => {
     let innerStageSings = 0;
 
-    const itemArr = item.split('');
+    const itemArr = item.trim().split('');
 
     if (itemArr.length === 1) {
       if (itemArr[0] === openBracket) openBracketCounter += 1;
@@ -22,35 +22,24 @@ function stylish(coll) {
       return item;
     }
 
-    const filteredItemArr = itemArr.filter((i) => i !== ' ');
+    if (itemArr.includes(openBracket)) openBracketCounter += 1;
 
-    if (filteredItemArr.includes(':')) {
-      const index = filteredItemArr.indexOf(':');
-      filteredItemArr.splice(index + 1, 0, sign);
-    }
+    if (itemArr.includes(closeBracket)) closeBracketCounter += 1;
 
-    if (filteredItemArr.includes(openBracket)) openBracketCounter += 1;
-
-    if (filteredItemArr.includes(closeBracket)) closeBracketCounter += 1;
-
-    if (filteredItemArr.includes('+') || filteredItemArr.includes('-')) {
+    if (itemArr.includes('+') || itemArr.includes('-')) {
       innerStageSings = 2;
-      const index1 = filteredItemArr.indexOf('+');
-      const index2 = filteredItemArr.indexOf('-');
-      const index = index1 >= 0 ? index1 : index2;
-      filteredItemArr.splice(index + 1, 0, sign);
     }
 
     stage = openBracketCounter - closeBracketCounter;
 
-    if (filteredItemArr.includes(openBracket)) {
+    if (itemArr.includes(openBracket)) {
       repeatedSign = sign.repeat((stage - 1) * signRepeatPerStage - innerStageSings);
     } else {
       repeatedSign = sign.repeat(stage * signRepeatPerStage - innerStageSings);
     }
 
-    filteredItemArr.unshift(repeatedSign);
-    return filteredItemArr.join('');
+    itemArr.unshift(repeatedSign);
+    return itemArr.join('');
   });
 
   return jsonArr.join('\n');
