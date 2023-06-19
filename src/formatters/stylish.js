@@ -56,8 +56,4 @@ function stylish(coll) {
   return jsonArr.join('\n');
 }
 
-const formatters = {
-  stylish,
-};
-
-export default formatters;
+export default stylish;

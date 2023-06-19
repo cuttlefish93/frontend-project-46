@@ -2,7 +2,7 @@ import * as path from 'node:path';
 import * as process from 'process';
 import * as fs from 'fs';
 import parsers from './parsers.js';
-import formatters from './formatters.js';
+import formatters from './formatters/index.js';
 
 function sortCollection(coll) {
   const newColl = {};
