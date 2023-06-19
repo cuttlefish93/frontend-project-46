@@ -16,15 +16,13 @@ function stylish(coll) {
 
     const itemArr = item.trim().split('');
 
-    if (itemArr.length === 1) {
-      if (itemArr[0] === openBracket) openBracketCounter += 1;
-      if (itemArr[0] === closeBracket) closeBracketCounter += 1;
-      return item;
-    }
-
     if (itemArr.includes(openBracket)) openBracketCounter += 1;
 
     if (itemArr.includes(closeBracket)) closeBracketCounter += 1;
+
+    if (itemArr.length === 1 && openBracketCounter - closeBracketCounter === 0) {
+      return item;
+    }
 
     if (itemArr.includes('+') || itemArr.includes('-')) {
       innerStageSings = 2;
