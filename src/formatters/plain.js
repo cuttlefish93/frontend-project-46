@@ -6,12 +6,15 @@ function getFormattedValue(value) {
   let valueForStr;
 
   if (isObject(value) && value !== null) {
-    return valueForStr = '[complex value]';
+    valueForStr = '[complex value]';
+    return valueForStr;
   } if (value === 'false' || value === 'true' || value === null || Number(value)) {
-    return valueForStr = value;
+    valueForStr = value;
+    return valueForStr;
   }
 
-  return valueForStr = `'${value}'`;
+  valueForStr = `'${value}'`;
+  return valueForStr;
 }
 
 function plain(coll, path = '') {
