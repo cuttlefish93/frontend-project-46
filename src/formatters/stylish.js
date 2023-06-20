@@ -15,7 +15,7 @@ function stylish(coll) {
     let isValueEmptyString;
     let innerStageSings = 0;
 
-    if (item.split(' ').at(-1) === ' ') {
+    if (item.split('').at(-1) === ' ') {
       isValueEmptyString = true;
     }
 
