@@ -3,23 +3,18 @@ function isObject(item) {
 }
 
 function getFormattedValue(value) {
-  let valueForStr;
-
   if (isObject(value) && value !== null) {
-    valueForStr = '[complex value]';
-    return valueForStr;
-  } if (value === 'false' || value === 'true' || value === null || value === '0' || Boolean(parseInt(value, 10))) {
-    valueForStr = value;
-    return valueForStr;
+    return '[complex value]';
+  }
+  if (value === 'false' || value === 'true' || value === null || value === '0' || Boolean(parseInt(value, 10))) {
+    return value;
   }
 
-  valueForStr = `'${value}'`;
-  return valueForStr;
+  return `'${value}'`;
 }
 
 function plain(coll, path = '') {
   const newPath = path === '' ? '' : `${path}.`;
-  const result = [];
 
   const keys = Object.keys(coll);
 
@@ -28,9 +23,7 @@ function plain(coll, path = '') {
     return newKey;
   });
 
-  keysWithoutSigh.forEach((key, i, arr) => {
-    let str;
-
+  const result = keysWithoutSigh.map((key, i, arr) => {
     const repeatedKeyI = arr.indexOf(key, i + 1);
     const value = coll[keys[i]];
     const valueForStr = getFormattedValue(value);
@@ -39,45 +32,44 @@ function plain(coll, path = '') {
 
     if (sign === '-') {
       if (repeatedKeyI < 0) {
-        str = `Property '${newPath}${key}' was removed`;
-        result.push(str);
-        return;
+        const str = `Property '${newPath}${key}' was removed`;
+        return str;
       }
       if (repeatedKeyI >= 0) {
-        str = `Property '${newPath}${key}' was updated. From ${valueForStr} to ${getFormattedValue(coll[keys[repeatedKeyI]])}`;
-        result.push(str);
-        return;
+        const str = `Property '${newPath}${key}' was updated. From ${valueForStr} to ${getFormattedValue(coll[keys[repeatedKeyI]])}`;
+        return str;
       }
     }
 
     if (sign === '+') {
       if (key === arr[i - 1]) {
-        return;
+        return '';
       }
       if (isValueObject) {
-        str = `Property '${newPath}${key}' was added with value: ${valueForStr}`;
-        result.push(str);
-        return;
+        const str = `Property '${newPath}${key}' was added with value: ${valueForStr}`;
+        return str;
       }
       if (!isValueObject) {
-        str = `Property '${newPath}${key}' was added with value: ${valueForStr}`;
-        result.push(str);
-        return;
+        const str = `Property '${newPath}${key}' was added with value: ${valueForStr}`;
+        return str;
       }
     }
 
     if (sign === key) {
       if (!isValueObject) {
-        return;
+        return '';
       }
       if (isValueObject) {
-        str = plain(value, `${newPath}${key}`);
-        result.push(str);
+        const str = plain(value, `${newPath}${key}`);
+        return str;
       }
     }
+
+    return '';
   });
 
-  return result.join('\n');
+  const filteredResult = result.filter((item) => item !== '');
+  return filteredResult.join('\n');
 }
 
 export default plain;
