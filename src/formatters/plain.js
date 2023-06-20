@@ -8,7 +8,7 @@ function getFormattedValue(value) {
   if (isObject(value) && value !== null) {
     valueForStr = '[complex value]';
     return valueForStr;
-  } if (value === 'false' || value === 'true' || value === null || Number(value)) {
+  } if (value === 'false' || value === 'true' || value === null || value === '0' || Boolean(parseInt(value, 10))) {
     valueForStr = value;
     return valueForStr;
   }
