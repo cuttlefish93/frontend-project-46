@@ -12,7 +12,12 @@ function stylish(coll) {
   const formattedJson = json.replaceAll('"', '').replaceAll(',', '');
 
   const jsonArr = formattedJson.split('\n').map((item) => {
+    let isValueEmptyString;
     let innerStageSings = 0;
+
+    if (item.split(' ').at(-1) === ' ') {
+      isValueEmptyString = true;
+    }
 
     const itemArr = item.trim().split('');
 
@@ -37,6 +42,11 @@ function stylish(coll) {
     }
 
     itemArr.unshift(repeatedSign);
+
+    if (isValueEmptyString) {
+      itemArr.push(`${sign}''`);
+    }
+
     return itemArr.join('');
   });
 
