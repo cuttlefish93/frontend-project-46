@@ -44,7 +44,7 @@ function stylish(coll) {
     itemArr.unshift(repeatedSign);
 
     if (isValueEmptyString) {
-      itemArr.push(`${sign}''`);
+      itemArr.push(`${sign}`);
     }
 
     return itemArr.join('');
